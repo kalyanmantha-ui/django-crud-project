@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<h1>Create Event</h1>
+<form id="createForm" method="post" action="{% url 'create_event' %}">
+  {% csrf_token %}
+  <label for="name">Event Name:</label>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="date">Event Date:</label>
+  <input type="date" id="date" name="date" required><br>
+
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" required></textarea><br>
+
+  <button type="submit">Create</button>
+</form>
+<a href="{% url 'list_events' %}">Back to Event List</a>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("createForm").addEventListener("submit", function(event) {
+    const name = document.getElementById("name").value.trim();
+    const date = document.getElementById("date").value;
+    const description = document.getElementById("description").value.trim();
+
+    if (name.length < 3) {
+      alert("Event name must be at least 3 characters long.");
+      event.preventDefault();
+    }
+    if (date === "") {
+      alert("Please select a valid date.");
+      event.preventDefault();
+    }
+    if (description.length < 10) {
+      alert("Description must be at least 10 characters long.");
+      event.preventDefault();
+    }
+  });
+</script>
+{% endblock %}

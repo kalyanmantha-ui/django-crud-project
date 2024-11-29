@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Update Event{% endblock %}
+
+{% block content %}
+<h1>Update Event</h1>
+<form id="updateForm" method="post" action="{% url 'update_event' event.id %}">
+  {% csrf_token %}
+  <label for="name">Event Name:</label>
+  <input type="text" id="name" name="name" value="{{ event.name }}" required><br>
+
+  <label for="date">Event Date:</label>
+  <input type="date" id="date" name="date" value="{{ event.date }}" required><br>
+
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" required>{{ event.description }}</textarea><br>
+
+  <button type="submit">Update</button>
+</form>
+<a href="{% url 'list_events' %}">Back to Event List</a>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("updateForm").addEventListener("submit", function(event) {
+    const name = document.getElementById("name").value.trim();
+    const date = document.getElementById("date").value;
+    const description = document.getElementById("description").value.trim();
+
+    if (name.length < 3) {
+      alert("Event name must be at least 3 characters long.");
+      event.preventDefault();
+    }
+    if (date === "") {
+      alert("Please select a valid date.");
+      event.preventDefault();
+    }
+    if (description.length < 10) {
+      alert("Description must be at least 10 characters long.");
+      event.preventDefault();
+    }
+  });
+</script>
+{% endblock %}
+
