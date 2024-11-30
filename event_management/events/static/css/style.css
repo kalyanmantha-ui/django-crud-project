@@ -3,8 +3,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    background-color: #f0f4f8; /* Updated background color */
     color: #333;
+    background-color: red;
 }
 
 /* Header Styles */
@@ -60,6 +61,16 @@ body {
     padding: 1em;
     background-color: #222;
     color: white;
+}
+
+/* Box for Content */
+.content-box {
+    background-color: white;
+    margin: 2em auto;
+    padding: 2em;
+    border-radius: 10px; /* Rounded corners for the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
+    max-width: 800px;
 }
 
 /* Form Styles */
@@ -122,6 +133,7 @@ table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
+/* Action Buttons */
 .actions a {
     margin-right: 0.5em;
     padding: 0.5em 1em;
@@ -157,6 +169,11 @@ table tr:nth-child(even) {
     form {
         margin: 1em;
         padding: 1em;
+    }
+
+    .content-box {
+        margin: 1em;
+        padding: 1.5em;
     }
 
     table {
