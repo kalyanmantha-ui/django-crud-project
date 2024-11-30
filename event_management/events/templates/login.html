@@ -3,18 +3,18 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h1>Login</h1>
-<form id="loginForm" method="post" action="{% url 'login' %}">
+<h1 class="form-title">Login</h1>
+<form id="loginForm" method="post" action="{% url 'login' %}" class="form">
   {% csrf_token %}
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required><br>
+  <label for="username" class="form-label">Username:</label>
+  <input type="text" id="username" name="username" class="form-input" required>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required><br>
+  <label for="password" class="form-label">Password:</label>
+  <input type="password" id="password" name="password" class="form-input" required>
 
-  <button type="submit">Login</button>
+  <button type="submit" class="submit-button">Login</button>
 </form>
-<a href="{% url 'signup' %}">Don't have an account? Sign up</a>
+<a href="{% url 'signup' %}" class="form-link">Don't have an account? Sign up</a>
 {% endblock %}
 
 {% block scripts %}
