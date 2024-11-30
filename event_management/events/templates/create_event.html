@@ -3,21 +3,21 @@
 {% block title %}Create Event{% endblock %}
 
 {% block content %}
-<h1>Create Event</h1>
-<form id="createForm" method="post" action="{% url 'create_event' %}">
+<h1 class="form-title">Create Event</h1>
+<form id="createForm" method="post" action="{% url 'create_event' %}" class="form">
   {% csrf_token %}
-  <label for="name">Event Name:</label>
-  <input type="text" id="name" name="name" required><br>
+  <label for="name" class="form-label">Event Name:</label>
+  <input type="text" id="name" name="name" class="form-input" required>
 
-  <label for="date">Event Date:</label>
-  <input type="date" id="date" name="date" required><br>
+  <label for="date" class="form-label">Event Date:</label>
+  <input type="date" id="date" name="date" class="form-input" required>
 
-  <label for="description">Description:</label>
-  <textarea id="description" name="description" required></textarea><br>
+  <label for="description" class="form-label">Description:</label>
+  <textarea id="description" name="description" class="form-input" required></textarea>
 
-  <button type="submit">Create</button>
+  <button type="submit" class="submit-button">Create</button>
 </form>
-<a href="{% url 'list_events' %}">Back to Event List</a>
+<a href="{% url 'list_events' %}" class="form-link">Back to Event List</a>
 {% endblock %}
 
 {% block scripts %}
@@ -31,7 +31,7 @@
       alert("Event name must be at least 3 characters long.");
       event.preventDefault();
     }
-    if (date === "") {
+    if (!date) {
       alert("Please select a valid date.");
       event.preventDefault();
     }

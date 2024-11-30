@@ -42,6 +42,10 @@ INSTALLED_APPS = [
 
 LOGIN_URL = '/login/'  # Redirect here if user is not logged in
 
+STATIC_URL = '/static/'  # URL prefix for static files
+
+# Directory where static files will be collected (for production)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
