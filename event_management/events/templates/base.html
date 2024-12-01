@@ -12,15 +12,22 @@
     <!-- Header Section -->
     <header>
         <nav class="header">
+            <div class="welcome">
+                {% if user.is_authenticated %}
+                    <span>Welcome, {{ user.username }}!</span>
+                {% endif %}
+            </div>
             <ul class="nav">
                 {% if user.is_authenticated %}
-                    <li><p>Welcome, {{ user.username }}!</p></li>
                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                     <li><a href="{% url 'all_events' %}">All Events</a></li>
                     <li><a href="{% url 'my_events' %}">My Events</a></li>
                     <li><a href="{% url 'create_event' %}">Create Event</a></li>
                     <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'event_statistics' %}">Statistics</a></li>
+                    <li><a href="{% url 'notifications' %}">Notifications</a></li>
                     <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>
                     <li><a href="{% url 'signup' %}">Signup</a></li>
@@ -28,22 +35,24 @@
             </ul>
         </nav>
     </header>
-    
-    
 
-    <!-- Main Content Section -->
+    <!-- Messages Section -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
     <main>
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer Section -->
-    <footer>
+    <!-- Footer -->
+    <footer class="footer">
         <p>&copy; 2024 Event Management System</p>
     </footer>
-
-    <!-- For adding custom JavaScript -->
-    {% block scripts %}
-    {% endblock %}
 </body>
 </html>

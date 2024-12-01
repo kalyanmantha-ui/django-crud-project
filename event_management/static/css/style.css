@@ -13,8 +13,13 @@ body {
     color: white;
     padding: 1em 2em;
     display: flex;
-    justify-content: flex-end; /* Push links to the right */
-    align-items: center; /* Vertically align */
+    justify-content: space-between; /* Space between welcome message and nav */
+    align-items: center; /* Vertically align items */
+}
+
+.welcome {
+    font-size: 1em;
+    color: white;
 }
 
 .nav {
@@ -281,11 +286,27 @@ main {
         font-size: 0.8em;
     }
 }
-.actions a {
-    background-color: yellow !important; /* Highlight button */
-    color: black !important; /* Make text visible */
-    border: 2px solid red !important; /* Add a red border for visibility */
-    visibility: visible !important; /* Force visibility */
-    opacity: 1 !important; /* Force full opacity */
-    display: inline-block !important; /* Ensure buttons are displayed */
+/* Messages Styles */
+.messages {
+    margin: 1em auto;
+    max-width: 800px;
+    padding: 1em;
+}
+
+.message {
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 1em;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }

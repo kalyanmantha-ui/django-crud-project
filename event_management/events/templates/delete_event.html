@@ -3,15 +3,22 @@
 {% block title %}Delete Event{% endblock %}
 
 {% block content %}
-<h1 class="form-title">Delete Event</h1>
-<p class="delete-message">
-  Are you sure you want to delete the event "<strong>{{ event.name }}</strong>" scheduled for <strong>{{ event.date }}</strong>"?
-</p>
-<form id="deleteForm" method="post" action="{% url 'delete_event' event.id %}" class="form">
-  {% csrf_token %}
-  <button type="submit" class="delete-button">Yes, Delete</button>
-</form>
-<a href="{% url 'list_events' %}" class="form-link">Cancel</a>
+<div class="content-box">
+    <h1>Delete Event</h1>
+    <p>Are you sure you want to delete the event <strong>{{ event.name }}</strong>?</p>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Organizer:</strong> {{ event.organizer.username }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Time:</strong> {{ event.time }}</p>
+
+    <form method="post" style="margin-top: 1em;">
+        {% csrf_token %}
+        <button type="submit" class="delete">Confirm Delete</button>
+    </form>
+
+    <a href="{% url 'my_events' %}" class="button" style="margin-top: 1em;">Cancel</a>
+</div>
 {% endblock %}
 
 {% block scripts %}

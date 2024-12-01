@@ -9,7 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.shortcuts import render
 from .models import Event, RSVP
-
+from django.http import HttpResponseForbidden
+from django.db.models import Count
+from datetime import date
 # Create
 
 @login_required
@@ -55,13 +57,24 @@ def update_event(request, event_id):
 
 @login_required
 def delete_event(request, event_id):
-    event = get_object_or_404(Event, id=event_id)  # Retrieve event by ID or return 404 if not found
+    # Get the event object or return 404 if it doesn't exist
+    event = get_object_or_404(Event, id=event_id)
+
+    # Check if the current user is the organizer of the event
+    if event.organizer != request.user:
+        # Add an error message and redirect to the "My Events" page
+        messages.error(request, "You are not allowed to delete this event.")
+        return redirect("my_events")
+
+    # Handle the POST request to delete the event
     if request.method == "POST":
-        event.delete()  # Delete the event
-        return redirect("list_events")  # Redirect to the list view
+        event.delete()
+        # Add a success message and redirect to the "My Events" page
+        messages.success(request, "Event deleted successfully.")
+        return redirect("my_events")
 
-    return render(request, "delete_event.html", {"event": event})  # Render delete confirmation
-
+    # For GET requests, render the delete confirmation page
+    return render(request, "delete_event.html", {"event": event})
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -168,3 +181,20 @@ def profile(request):
         request.user.save()
 
     return render(request, 'profile.html', {'user': request.user})
+@login_required
+def event_statistics(request):
+    created_events = Event.objects.filter(organizer=request.user)
+    total_rsvps = RSVP.objects.filter(event__in=created_events).count()
+    event_rsvp_counts = created_events.annotate(rsvp_count=Count("rsvp"))
+    return render(request, "event_statistics.html", {
+        "created_events": created_events,
+        "total_rsvps": total_rsvps,
+        "event_rsvp_counts": event_rsvp_counts,
+    })
+@login_required
+def notifications(request):
+    # Get RSVPs for the logged-in user
+    upcoming_events = RSVP.objects.filter(user=request.user, event__date__gte=date.today())
+    return render(request, "notifications.html", {
+        "upcoming_events": upcoming_events,
+    })

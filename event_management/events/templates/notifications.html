@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <h1>Notifications</h1>
+    <h2>Upcoming Events</h2>
+    <ul>
+        {% for rsvp in upcoming_events %}
+            <li>
+                <strong>{{ rsvp.event.name }}</strong><br>
+                <span>Date: {{ rsvp.event.date }}</span><br>
+                <span>Description: {{ rsvp.event.description }}</span><br>
+                <a href="{% url 'event_details' rsvp.event.id %}">View Details</a>
+            </li>
+        {% empty %}
+            <p>No upcoming events.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
