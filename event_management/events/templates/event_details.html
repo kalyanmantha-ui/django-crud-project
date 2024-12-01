@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ event.name }}</h1>
+<p><strong>Date:</strong> {{ event.date }}</p>
+<p><strong>Description:</strong> {{ event.description }}</p>
+<p><strong>Organizer:</strong> {{ event.organizer.username }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {% if is_registered %}
+        <button type="submit" name="cancel_rsvp" class="button">Cancel RSVP</button>
+    {% else %}
+        <button type="submit" name="rsvp" class="button">RSVP</button>
+    {% endif %}
+</form>
+
+<a href="{% url 'all_events' %}" class="button">Back to All Events</a>
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <h1>Dashboard</h1>
+    <p><strong>Total Events:</strong> {{ total_events }}</p>
+    <p><strong>Registered Events:</strong> {{ registered_events }}</p>
+    <p><strong>Upcoming Events:</strong> {{ upcoming_events }}</p>
+    <a href="{% url 'all_events' %}" class="button">View All Events</a>
+</div>
+{% endblock %}

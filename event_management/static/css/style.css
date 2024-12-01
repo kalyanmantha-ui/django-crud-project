@@ -79,6 +79,7 @@ body {
     border-radius: 10px; /* Rounded corners for the box */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
     max-width: 800px;
+    text-align: center;
 }
 
 /* Form Styles */
@@ -196,10 +197,47 @@ table tr:nth-child(even) {
     border-color: #A02020; /* Darker border on hover */
 }
 
-/* Ensure table buttons are always visible */
-.actions a:disabled {
-    opacity: 0.5; /* Style for disabled buttons */
-    cursor: not-allowed; /* Change cursor */
+/* Dashboard Page */
+.dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2em;
+}
+
+.dashboard-stats .stat-box {
+    background-color: white;
+    padding: 1em 2em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 200px;
+}
+
+.dashboard-stats .stat-box h2 {
+    font-size: 2em;
+    color: #4CAF50;
+}
+
+/* Profile Page */
+.profile-form {
+    background-color: white;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 2em auto;
+}
+
+.profile-form label {
+    font-weight: bold;
+}
+
+.profile-form input {
+    padding: 0.7em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 /* Main Content Styling */
@@ -244,7 +282,7 @@ main {
     }
 }
 .actions a {
-    background-color: lightblue !important; /* Highlight button */
+    background-color: yellow !important; /* Highlight button */
     color: black !important; /* Make text visible */
     border: 2px solid red !important; /* Add a red border for visibility */
     visibility: visible !important; /* Force visibility */

@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from django.contrib.auth.models import User
@@ -6,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.shortcuts import render
+from .models import Event, RSVP
 
 # Create
 
@@ -15,8 +18,16 @@ def create_event(request):
         name = request.POST.get("name")
         date = request.POST.get("date")
         description = request.POST.get("description")
-        Event.objects.create(name=name, date=date, description=description)
+
+        # Automatically set the organizer to the logged-in user
+        Event.objects.create(
+            name=name,
+            date=date,
+            description=description,
+            organizer=request.user  # Assign the logged-in user as the organizer
+        )
         return redirect("list_events")
+    
     return render(request, "create_event.html")
 
 # Read
@@ -92,3 +103,68 @@ def logout_view(request):
     logout(request)
     messages.success(request, "Logged out successfully!")
     return redirect("login")
+@login_required
+def dashboard(request):
+    total_events = Event.objects.count()
+    registered_events = RSVP.objects.filter(user=request.user).count()
+    upcoming_events = Event.objects.filter(date__gte=datetime.date.today()).count()
+
+    return render(request, 'dashboard.html', {
+        'total_events': total_events,
+        'registered_events': registered_events,
+        'upcoming_events': upcoming_events
+    })
+@login_required
+def all_events(request):
+    events = Event.objects.all()
+    return render(request, 'all_events.html', {'events': events})
+@login_required
+def event_details(request, event_id):
+    # Safely fetch the event or return a 404 if it doesn't exist
+    event = get_object_or_404(Event, id=event_id)
+    
+    # Check if the user is already registered for the event
+    is_registered = RSVP.objects.filter(user=request.user, event=event).exists()
+
+    if request.method == "POST":
+        # Handle RSVP registration
+        if 'rsvp' in request.POST:
+            RSVP.objects.get_or_create(user=request.user, event=event)
+            is_registered = True  # Update the variable after RSVP
+
+        # Handle RSVP cancellation
+        elif 'cancel_rsvp' in request.POST:
+            RSVP.objects.filter(user=request.user, event=event).delete()
+            is_registered = False  # Update the variable after cancellation
+
+    # Render the event details template
+    return render(request, 'event_details.html', {
+        'event': event,
+        'is_registered': is_registered
+    })
+@login_required
+def my_events(request):
+    # Fetch events created by the logged-in user
+    created_events = Event.objects.filter(organizer=request.user)
+
+    # Fetch RSVP details for created events
+    # Attach RSVP details to each event for easy access in the template
+    for event in created_events:
+        event.rsvps = RSVP.objects.filter(event=event).select_related('user')
+
+    # Fetch events the logged-in user has registered for
+    registered_events = RSVP.objects.filter(user=request.user).select_related('event')
+
+    return render(request, 'my_events.html', {
+        'created_events': created_events,
+        'registered_events': registered_events,
+    })
+@login_required
+def profile(request):
+    if request.method == "POST":
+        request.user.first_name = request.POST['first_name']
+        request.user.last_name = request.POST['last_name']
+        request.user.email = request.POST['email']
+        request.user.save()
+
+    return render(request, 'profile.html', {'user': request.user})

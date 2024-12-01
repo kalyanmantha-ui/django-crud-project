@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}All Events{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <h1>All Events</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.name }}</td>
+            <td>{{ event.date }}</td>
+            <td>
+                <a href="{% url 'event_details' event.id %}" class="button">View Details</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No events available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

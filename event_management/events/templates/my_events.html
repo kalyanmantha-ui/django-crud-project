@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}My Events{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <h1>My Events</h1>
+
+    <h2>Created Events</h2>
+    <ul>
+        {% for event in created_events %}
+        <li>
+            <strong>{{ event.name }}</strong> ({{ event.date }})
+            <a href="{% url 'update_event' event.id %}" class="edit">Edit</a>
+            <a href="{% url 'delete_event' event.id %}" class="delete">Delete</a>
+            
+            <!-- Show RSVP details -->
+            {% with event.rsvps.all as rsvp_list %}
+            <h3>RSVPs:</h3>
+            {% if rsvp_list %}
+            <ul>
+                {% for rsvp in rsvp_list %}
+                <li>{{ rsvp.user.username }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No RSVPs yet.</p>
+            {% endif %}
+            {% endwith %}
+        </li>
+        {% empty %}
+        <p>You haven't created any events yet.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Registered Events</h2>
+    <ul>
+        {% for rsvp in registered_events %}
+        <li>
+            <strong>{{ rsvp.event.name }}</strong> ({{ rsvp.event.date }})
+        </li>
+        {% empty %}
+        <p>You haven't registered for any events yet.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

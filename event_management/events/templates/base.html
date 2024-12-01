@@ -11,15 +11,24 @@
 <body>
     <!-- Header Section -->
     <header>
-        <nav>
-            {% if user.is_authenticated %}
-                <p>Welcome, {{ user.username }}!</p>
-                <a href="{% url 'logout' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Signup</a>
-            {% endif %}
+        <nav class="header">
+            <ul class="nav">
+                {% if user.is_authenticated %}
+                    <li><p>Welcome, {{ user.username }}!</p></li>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'all_events' %}">All Events</a></li>
+                    <li><a href="{% url 'my_events' %}">My Events</a></li>
+                    <li><a href="{% url 'create_event' %}">Create Event</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}" class="logout">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Signup</a></li>
+                {% endif %}
+            </ul>
         </nav>
     </header>
+    
     
 
     <!-- Main Content Section -->
