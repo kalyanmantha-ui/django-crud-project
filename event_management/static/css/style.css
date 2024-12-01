@@ -13,32 +13,26 @@ body {
     color: white;
     padding: 1em 2em;
     display: flex;
-    justify-content: space-between; /* Align links to right */
+    justify-content: flex-end; /* Push links to the right */
     align-items: center; /* Vertically align */
 }
 
 .nav {
-    list-style: none;
     display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.nav li {
-    margin-left: 1em;
+    gap: 1.5em; /* Space between links */
 }
 
 .nav a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    margin-left: 1em; /* Add spacing between links */
 }
 
 .nav a:hover {
     text-decoration: underline;
 }
 
+/* Button Styles */
 .button {
     background-color: #007BFF;
     padding: 0.5em 1em;
@@ -70,6 +64,11 @@ body {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.9em; /* Adjust font size for better balance */
 }
 
 /* Box for Content */
@@ -123,9 +122,10 @@ button:hover {
 .form-link {
     text-align: center;
     display: block;
-    margin-top: 1em;
+    margin-top: 1.5em; /* Adjust spacing above the link */
     color: #007BFF;
     text-decoration: none;
+    font-size: 0.9em;
 }
 
 .form-link:hover {
@@ -138,11 +138,13 @@ table {
     border-collapse: collapse;
     margin: 2em 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    table-layout: auto; /* Ensure cells adjust width */
 }
 
 table th, table td {
     padding: 1em;
-    text-align: left;
+    text-align: center; /* Center-align text and buttons */
+    vertical-align: middle; /* Center-align content */
     border-bottom: 1px solid #ddd;
 }
 
@@ -157,36 +159,70 @@ table tr:nth-child(even) {
 
 /* Action Buttons */
 .actions a {
-    margin-right: 0.5em;
-    padding: 0.5em 1em;
-    border-radius: 5px;
-    color: white;
+    display: inline-block; /* Ensure buttons appear inline-block */
+    padding: 0.5em 1em; /* Add padding for consistency */
+    margin: 0.2em; /* Space between buttons */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Ensure text is visible */
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 0.9em; /* Adjust font size */
     font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    visibility: visible; /* Ensure visibility */
+    opacity: 1; /* Fully visible */
 }
 
+/* Edit Button */
 .actions .edit {
-    background-color: #007BFF;
+    background-color: #007BFF; /* Blue for Edit */
+    color: white;
+    border: 1px solid #0056b3; /* Add a border for visibility */
 }
 
 .actions .edit:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #003f7f; /* Darker border on hover */
 }
 
+/* Delete Button */
 .actions .delete {
-    background-color: #FF5733;
+    background-color: #FF5733; /* Red for Delete */
+    color: white;
+    border: 1px solid #C13A24; /* Add a border for visibility */
 }
 
 .actions .delete:hover {
-    background-color: #C13A24;
+    background-color: #C13A24; /* Darker red on hover */
+    border-color: #A02020; /* Darker border on hover */
+}
+
+/* Ensure table buttons are always visible */
+.actions a:disabled {
+    opacity: 0.5; /* Style for disabled buttons */
+    cursor: not-allowed; /* Change cursor */
+}
+
+/* Main Content Styling */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    min-height: calc(100vh - 150px); /* Adjust height for header and footer */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .nav {
         flex-direction: column;
-        align-items: flex-start; /* Align links to the left on small screens */
+        gap: 0.5em; /* Smaller gap between links */
     }
 
     form {
@@ -202,4 +238,16 @@ table tr:nth-child(even) {
     table {
         font-size: 0.9em;
     }
+
+    .footer {
+        font-size: 0.8em;
+    }
+}
+.actions a {
+    background-color: lightblue !important; /* Highlight button */
+    color: black !important; /* Make text visible */
+    border: 2px solid red !important; /* Add a red border for visibility */
+    visibility: visible !important; /* Force visibility */
+    opacity: 1 !important; /* Force full opacity */
+    display: inline-block !important; /* Ensure buttons are displayed */
 }
